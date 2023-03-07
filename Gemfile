@@ -1,9 +1,5 @@
 source "https://rubygems.org"
 
-
-# Cross Origin Resource Sharing helper for Sinatra
-gem 'sinatra-cross_origin', '~> 0.4.0'
-
 # A DSL for quickly creating web applications
 # https://github.com/sinatra/sinatra
 gem "sinatra", "~> 2.1"
@@ -35,27 +31,24 @@ gem "rake", "~> 13.0"
 # Provides functionality to interact with a SQLite3 database
 gem "sqlite3", "~> 1.4"
 
-# provides a simple wrapper for safely handling passwords
-gem 'bcrypt', '~> 3.1', '>= 3.1.18'
-
 # Require all files in a folder
 gem "require_all", "~> 3.0"
 
-# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
-gem "jwt"
+gem 'puma'
+
+gem 'faker', '~> 3.1', '>= 3.1.1'  
+
+
 
 # These gems will only be used when we are running the application locally
 group :development do
   gem "pry", "~> 0.14.1"
 
+  
   # Automatically reload when there are changes
   # https://github.com/alexch/rerun
   gem "rerun"
 
-# Faker, a port of Data::Faker from Perl, 
-# is used to easily generate fake data: names, addresses, phone numbers, etc.
-# https://github.com/faker-ruby/faker
-  gem 'faker'
 end
 
 # These gems will only be used when we are running tests
