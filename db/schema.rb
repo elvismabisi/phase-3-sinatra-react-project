@@ -10,37 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_07_073701) do
+ActiveRecord::Schema.define(version: 2023_03_07_075456) do
 
-  create_table "credentials", force: :cascade do |t|
-    t.string "username"
-    t.string "email"
-    t.string "password"
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "description", null: false
-    t.string "image_url"
+  create_table "project_members", force: :cascade do |t|
+    t.string "name"
+    t.text "email"
+    t.integer "user_id"
+    t.integer "project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "skills", force: :cascade do |t|
-    t.string "skill"
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "title"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "speciality"
-    t.string "avatar_url"
-    t.string "experience"
-    t.string "interests"
-    t.string "hobies"
-    t.datetime "date_of_birth"
-    t.string "locale"
-    t.string "address"
-    t.string "education"
+    t.string "username"
+    t.text "email"
+    t.text "password"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

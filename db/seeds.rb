@@ -1,49 +1,27 @@
-# require 'faker'
-
-puts "🌱 Seeding tables..."
-
+puts ":seedling: Seeding spices..."
+Project.destroy_all
+ProjectMember.destroy_all
 # Seed your database here
+puts "Creating projects"
+project1 = Project.create(name: 'TFC', title: 'Sky sports', description: 'sports project', user_id: 10)
+project2 = Project.create(name: 'CDH', title: 'foodnetwork', description: 'fast food restaurant', user_id: 20)
+project3 = Project.create(name: 'APC', title: 'Banana plants cooporation', description: 'banana plantation project', user_id: 30)
+project4 = Project.create(name: 'MIC', title: 'mark webber cooporation', description: 'formula1 organization',user_id: 40)
+project5 = Project.create(name: 'CCI', title: 'tree planting inititiative', description: 'tree plantation',user_id: 50)
 
-5.times do
-    
-    user = User.create(
-        email: Faker::Internet.email,
-        speciality: Faker::Lorem.word,
-        avatar_url: Faker::LoremFlickr.image,
-        experience: Faker::Lorem.paragraph,
-        interests: Faker::Lorem.sentence(5),
-        hobies: Faker::Lorem.sentence(5),
-        date_of_birth: Faker::Date.birthday(min_age: 15, max_age: 65),
-        locale: Faker::Address.country,
-        address: Faker::Address.full_address,
-        education: Faker::Educator.degree,
-        name: Faker::Name.name
-    )
-
-    # create between 1 and 10 projects with random data for each user
-    rand(1..10).times do
-        project = Project.create(
-        title: Faker::Lorem.sentence(5),
-        description: Faker::Lorem.paragraph,
-        image_url: Faker::LoremFlickr.image,
-        user_id: user.id
-    )
-    end
-
-    # create between 1 and 20 skills for each user
-    rand(1..20).times do
-        skill = Skill.create(
-        skill: Faker::Job.key_skill,
-        user_id: user.id
-    )
-    end
-
-    credential = Credential.create(
-        password: Faker::Internet.password,
-        username: Faker::Internet.username(specifier: 5),
-        email: user.email,
-        user_id: user.id
-    )
+20.times do
+  user = User.create(
+    username: Faker::Internet.username,
+    password: Faker::Internet.password,
+    email: Faker::Internet.email
+  )
 end
+puts "Creating members"
+member1 = ProjectMember.create(name: 'Joan wambui', email: 'joan.wambui@gmail.com', user_id: 1, project_id: 1)
+member2 = ProjectMember.create(name: 'Dorcas njeri', email: 'dorcas.njeri@gmail.com', user_id: 2, project_id: 2)
+member3 = ProjectMember.create(name: 'David omollo', email: 'david.omollo@gmail.com', user_id:3, project_id: 3)
+member4 = ProjectMember.create(name: 'Ian maina', email: 'Ian.maina@gmail.com', user_id:4, project_id: 4)
+member5 = ProjectMember.create(name: 'Marcus mutuku', email: 'marcus.mutuku@gmail.com', user_id:5, project_id: 5)
 
-puts "✅ Done seeding!"
+
+puts "done seeding"
