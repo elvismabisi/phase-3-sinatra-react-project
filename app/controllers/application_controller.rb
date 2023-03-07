@@ -1,87 +1,97 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
 
-  # @api: Enable CORS Headers
-  configure do
-    enable :cross_origin
-  end
-
   before do
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers["Access-Control-Allow-Origin"]="*"
+  end
+  get '/project' do
+end
+  
+  # Add routes
+  get '/users' do 
+    users = User.all
+        users.to_json
+  end
+  post '/users' do
+    user = User.create(
+      username: params[:username],
+      email: params[:email],
+      password: params[:password]
+    )
+    user.to_json
+  end
+  patch '/users/:id' do
+    user = User.find(params[:id])
+    user.update(
+      username: params[:username],
+      email: params[:email],
+      password: params[:password]
+    )
+    user.to_json
   end
 
-  options "*" do
-    response.headers["Allow"] = "GET, PUT, POST, DELETE, OPTIONS"
-    response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    200
+  delete '/users/:id' do
+    user = User.find(params[:id])
+    user.destroy
+    user.to_json
+  end
+  # Members
+  get '/project-members' do 
+    members = ProjectMember.all
+    members.to_json
+  end
+  post '/project-members' do
+    member = Project-Member.create(
+      name: params[:name],
+      email: params[:email],
+      user_id: params[:user.id],
+      project_id: params[:project.id]
+    )
+    member.to_json
+  end
+  patch '/project-members/:id' do
+    member = ProjectMember.find(params[:id])
+    member.update(
+      name: params[:name],
+      email: params[:email],
+      user_id: params[:user.id],
+      project_id: params[:project.id]
+    )
+      member.to_json
+    
   end
 
-
-  # a user should be able to view all their listed projects
-  get '/projects/:id' do
-    project = User.find(params[:id]).projects
-    project.to_json
+  delete '/project-members/:id' do
+    member = ProjectMember.find(params[:id])
+    member.destroy
+    member.to_json
   end
-
-  # # A user should be able to add a new project to their portfolio.
-  post '/create-project/:id' do
-    project = User.find(params[:id]).projects.create(
+  # Projects
+  get '/projects' do 
+    projects = Project.all
+    projects.to_json
+  end
+  post '/projects' do
+    project = Project.create(
+      name: params[:name],
       title: params[:title],
-      description: params[:description],
-      image_url: params[:image_url]
+      description: params[:description]
     )
     project.to_json
-
   end
-
-  # # A user should be able to update existing project data.
-  patch '/update-project/:id/:id2' do
-    data = JSON.parse(request.body.read) 
-    project = User.find(params[:id]).projects
-    project.find(params[:id2]).update(data)
+  patch '/projects/:id' do
+    project = Project.find(params[:id])
+    project.update(
+      name: params[:name],
+      title: params[:title],
+      description: params[:description]
+    )
     project.to_json
   end
 
-  # # A user should be able to delete a project.
-  delete '/delete-project/:id/:id2' do
-    project = User.find(params[:id]).projects
-    project.find(params[:id2]).destroy
-   end
-
-  # # A user should be able to view their listed skills.
-  get '/skills/:id' do
-    skill = User.find(params[:id]).skills
-    skill.to_json
+  delete '/projects/:id' do
+    project = Project.find(params[:id])
+    project.destroy
+    project.to_json
   end
-
-  # A user should be able add their skills. -DONE
-  # A user can have a maximum of 10 skills. - DONE
-  post '/create-skill/:id' do
-    data = JSON.parse(request.body.read) 
-
-    count_skills = User.find(params[:id]).skills.count
-
-    if count_skills < 20
-      skill = User.find(params[:id]).skills.create(data)
-      skill.to_json
-    else
-      {message: "You can only have 20 skills."}.to_json
-    end
-
-  end
-
-  # A user should be able update their skills.
-  patch '/update-skill/:id/:id2' do
-    data = JSON.parse(request.body.read) 
-    skill = User.find(params[:id]).skills.find(params[:id2]).update(data)
-    skill.to_json
-  end
-
-  # A user should be able delete their skills.
-  delete '/delete-skill/:id/:id2' do
-    skill = User.find(params[:id]).skills
-    skill.find(params[:id2]).destroy
-  end
-
 end
