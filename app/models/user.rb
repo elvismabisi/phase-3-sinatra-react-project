@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-    has_many :projects
-    has_many :skills
-    has_many :credentials
- end
+    has_many :project_members
+    has_many :projects, through: :project_members
+end
